@@ -1,11 +1,40 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
+const SPEED = 500.0
 const JUMP_VELOCITY = 4.5
+#Camera3D camera
+
+func _init() -> void:
+	#camera = get_node('Camera3D')
+	pass
+
+func _process(delta: float) -> void:
+	
+	#TODO implement camera rotation
+	
+	#print("hallo")
+	
+	pass
 
 func _physics_process(delta: float) -> void:
-	pass
+	var inputVector = Vector3.ZERO
+	
+	if Input.is_action_pressed("player_forward"):
+		inputVector -= global_transform.basis.z
+	if Input.is_action_pressed("player_backward"):
+		inputVector += global_transform.basis.z
+	if Input.is_action_pressed("player_left"):
+		inputVector -= global_transform.basis.x
+	if Input.is_action_pressed("player_right"):
+		inputVector += global_transform.basis.x
+	
+	var dir = inputVector.normalized()
+	
+	velocity = delta * dir * SPEED
+	
+	move_and_slide()
+	#pass
 
 #func _physics_process(delta: float) -> void:
 	## Add the gravity.
